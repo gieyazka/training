@@ -24,6 +24,20 @@ require_once "thailand.inc.php";
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- Bootstrap4 Duallistbox -->
+    <link rel="stylesheet" href="plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+
 </head>
 <style>
     .se {
@@ -84,15 +98,7 @@ require_once "thailand.inc.php";
 
             <!-- Sidebar -->
             <div class="sidebar navbar-dark navbar-gray-dark">
-                <!-- Sidebar user (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
-                    </div>
-                </div>
+
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
@@ -103,16 +109,16 @@ require_once "thailand.inc.php";
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-futbol"></i>
                                 <p>
-                                    Dashboard
+                                    ผู้ใช้งาน
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="index.html" class="nav-link">
+                                    <a href="register" class="nav-link">
                                         <i class="fas fa-futbol fa-circle nav-icon"></i>
 
-                                        <p>Dashboard v1</p>
+                                        <p>ระบบสมัครสามชิก</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -136,14 +142,9 @@ require_once "thailand.inc.php";
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>General Form</h1>
+                            <h1>ระบบสมัครสมาชิก</h1>
                         </div>
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">General Form</li>
-                            </ol>
-                        </div>
+
                     </div>
                 </div><!-- /.container-fluid -->
             </section>
@@ -158,92 +159,105 @@ require_once "thailand.inc.php";
                         <div class="col-md-8">
                             <!-- general form elements -->
                             <div class="card card-primary">
-                                <div class="card-header">
 
-                                    <select class='test font se ' id="cars">
-                                        <option value="volvo">Volvo</option>
-                                        <option value="saab">Saab</option>
-                                        <option value="mercedes">Mercedes</option>
-                                        <option value="audi">Audi</option>
-                                    </select>
-                                </div>
                                 <!-- /.card-header -->
                                 <!-- form start -->
-                                <form role="form">
+                                <form role="form" action="#" method="POST" id='Form_Register'>
+                                    <div class="card-header">
+
+                                        <select class='test font se' id="subject" name='subject'>
+                                            <option value="volvo">Volvo</option>
+                                            <option value="saab">Saab</option>
+                                            <option value="mercedes">Mercedes</option>
+                                            <option value="audi">Audi</option>
+                                        </select>
+                                    </div>
                                     <div class="card-body">
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                             </div>
-                                            <input type="email" class="form-control" placeholder="รหัสบัตรประชาชน">
+                                            <input type="text" class="form-control" id="Pid" name='Pid' data-validation="length" data-validation-length="13" placeholder="รหัสบัตรประชาชน">
                                         </div>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                             </div>
-                                            <input type="email" class="form-control" placeholder="Email">
+                                            <input type="email" class="Name form-control" id="Email" name='Email' data-validation="email" placeholder="Email">
                                         </div>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                             </div>
-                                            <input type="text" class="form-control col-6" placeholder="ชื่อ">
-                                            <input type="text" class="form-control col-6" placeholder="นามสกุล">
-                                        </div>
-
-
-
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <!-- textarea -->
-                                                <div class="form-group">
-
-                                                    <div class="input-group-prepend ">
-                                                        <span class="input-group-text"><i class="fas fa-address-book"></i></span>
-                                                        <textarea class="form-control " rows="3" placeholder="ที่อยู่"></textarea>
-                                                    </div>
-                                                    <div class="input-group-prepend ">
-                                                        <span class="input-group-text"><i class="fas fa-address-book"></i></span>
-                                                        <input type="text" class="form-control " placeholder="รหัสไปรษณีย์">
-                                                    </div>
+                                            <input type="text" id='Name' name='Fname' class="form-control col-4 Name" data-validation="required" placeholder="ชื่อ">
+                                            <input type="text" id='Name' name='Lname' class="form-control col-4 Name" data-validation="required" placeholder="นามสกุล">
+                                            <input type="text" name='Birthdate' id="reservationdate" placeholder="วันเดือนปีเกิด" class="Name form-control datetimepicker-input" data-target="#reservationdate" />
+                                            <div class="input-group-append" id="reservationdate" data-validation="date" data-validation-format="dd/mm/yyyy" data-target="#reservationdate" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <select id='province' class="form-control select2 col-12" style="width: 100%;">
-                                                    <option value="0" selected="selected">เลือกจังหวัด</option>
-                                                    <?php
-                                                    $obj = new thailand;
-                                                    $provinces = $obj->getprovince();
-                                                    // print_r($provinces[0]["name_th"]);
-                                                    for ($i = 0; $i < sizeof($provinces); $i++) {
-                                                        echo  "<option id='{$provinces[$i]["id"]}' value='{$provinces[$i]["name_th"]}'>{$provinces[$i]["name_th"]}</option> ";
-                                                    }
-                                                    //// search select
-                                                    ?>
-                                                </select>
-                                                <select id='amphure' class="form-control select2 col-12" disabled style="width: 100%;">
-                                                    <option value="0" selected="selected">เลือกเขต/อำเภอ</option>
-
-                                                </select>
-                                                <select id='district' class="form-control select2 col-12" disabled style="width: 100%;">
-                                                    <option selected="selected">เลือกแขวง/ตำบล</option>
-                                                
-                                                </select>
-
-
-
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-address-book"></i></span>
                                             </div>
+                                            <input type="text" class="Name form-control col-8" name='Address' data-validation="required" placeholder="ที่อยู่">
+                                            <input type="text" id='Zipcode' class="form-control col-4" name='Zipcode' data-validation="number" placeholder="รหัสไปรษณีย์">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-address-book"></i></span>
+                                            </div>
+                                            <select id='province' name='Province' data-validation="required" class="form-control select2 col-4" style="width: 100%;">
+                                                <option value="" selected="selected">เลือกจังหวัด</option>
+                                                <?php
+                                                $obj = new thailand;
+                                                $provinces = $obj->getprovince();
+                                                // print_r($provinces[0]["name_th"]);
+                                                for ($i = 0; $i < sizeof($provinces); $i++) {
+                                                    echo  "<option id='{$provinces[$i]["id"]}' value='{$provinces[$i]["name_th"]}'>{$provinces[$i]["name_th"]}</option> ";
+                                                }
+                                                //// search select
+                                                ?>
+                                            </select>
+                                            <select id='amphure' name='amphure' data-validation="required" class="form-control select2 col-4" disabled style="width: 100%;">
+                                                <option value="" selected="selected">เลือกเขต/อำเภอ</option>
+
+                                            </select>
+                                            <select id='district' name='district' data-validation="required" class="form-control select2 col-4" disabled style="width: 100%;">
+                                                <option value="" selected="selected">เลือกแขวง/ตำบล</option>
+                                            </select>
                                         </div>
 
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-school"></i></span>
+                                            </div>
+                                            <input type="text" name='School' data-validation="required" class="Name form-control col-4" placeholder="โรงเรียน">
+                                            <input type="text" name='Class' data-validation="required" class="Name form-control col-4" placeholder="ระดับชั้นที่ศึกษาอยู่">
+                                            <span class="input-group-text"><i class="fas fa-shoe-prints"></i></span>
+                                            <select id='foot' name='Foot' data-validation="required" class="form-control select2 col-4" style="width: 100%;">
+                                                <option value="" selected="selected">เท้าที่ถนัด</option>
+                                                <option value="ซ้าย">ซ้าย</option>
+                                                <option value="ขวา">ขวา</option>
+                                                <option value="ทั้งสองข้าง">ทั้งสองข้าง</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                            </div>
 
-
-
-
+                                            <input type="text" name='Tel' class="Name form-control col-4" placeholder="เบอร์โทร">
+                                            <input type="text" name='Parent_tel' data-validation="required" class="Name form-control col-4" placeholder="เบอร์โทรผู้ปกครอง">
+                                            <span class="input-group-text"><i class="fab fa-bitcoin"></i></span>
+                                            <input type="text" name='salary' data-validation="required" class="Name form-control col-4" placeholder="รายได้ครอบครัว">
+                                        </div>
                                     </div>
                                     <!-- /.card-body -->
 
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="button" id='SendData' data-toggle="modal" data-target="#DataModal" style="width:100%" class="btn btn-primary">Submit</button>
                                     </div>
                                 </form>
                             </div>
@@ -279,28 +293,116 @@ require_once "thailand.inc.php";
     </aside>
     <!-- /.control-sidebar -->
     </div>
-    <!-- ./wrapper -->
 
     <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- ./wrapper -->
+    <!-- InputMask -->
+    <script src="plugins/moment/moment.min.js"></script>
+    <script src="plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Bootstrap 4 -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- bs-custom-file-input -->
     <script src="plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
+    <script src="form-validator/jquery.form-validator.js"></script>
+    <script>
+        $(function() {
+            // setup validate
+            $.validate();
+        });
+        $(function() {
+            $('#reservationdate').datetimepicker({
+                // format: 'L'
+                format: 'DD/MM/YYYY'
+            });
+        })
+
+        function validateEmail($email) {
+            var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+            return emailReg.test($email);
+        }
+    </script>
     <script type="text/javascript">
         $(document).ready(function() {
             bsCustomFileInput.init();
+            var SendData = $('#SendData')
+            var PIDobj = $('#Pid')
+            var EmailObj = $('#Email')
+            var NameObj = $('.Name')
+            var ZipcodeObj = $('#Zipcode')
+            NameObj.each(function() {
+                $(this).on('blur', function() {
+                    if ($(this).val() == '' || $(this).val() == "null") {
+                        $(this).removeClass("is-valid").addClass("is-invalid");
+                    } else {
+                        $(this).removeClass("is-invalid").addClass("is-valid");
+                    }
+                });
+            });
+            ZipcodeObj.keyup(function() {
+                if (ZipcodeObj.val().length != 5) {
+                    ZipcodeObj.removeClass("is-valid").addClass("is-invalid");
+                } else {
+                    ZipcodeObj.removeClass("is-invalid").addClass("is-valid");
+                }
+            });
+            SendData.click(function() {
+                // $('#Form_Register').submit()
+                $.ajax({
+                    url: 'register.control.php',
+                    method: "POST",
+                    data: $('#Form_Register').serialize() + "&action=1",
+                    success: function(result) {
+                        // alert(result)
+                        if (result == "") {
+                            $("#ShowOutput").html("กรอกครบแล้ว")
+                        } else {
+                            $("#ShowOutput").html(result)
+                            $('#Finish').hide()
+                        }
+                    }
+                });
+                // console.log($('#Form_Register').serialize());
+            });
+            PIDobj.keyup(function() {
+
+                if (PIDobj.val().length != 13) {
+                    PIDobj.removeClass("is-valid").addClass("is-invalid");
+                } else {
+                    for (i = 0, sum = 0; i < 12; i++) {
+                        sum += parseFloat(PIDobj.val().charAt(i)) * (13 - i);
+                    }
+                    // console.log(sum)
+                    if ((11 - sum % 11) % 10 != parseFloat(PIDobj.val().charAt(12))) {
+
+                        PIDobj.removeClass("is-valid").addClass("is-invalid");
+                    } else {
+                        PIDobj.removeClass("is-invalid").addClass("is-valid");
+
+                    }
+                }
+            });
+            EmailObj.keyup(function() {
+                if (!validateEmail(EmailObj.val()) || $(this).val() == "") {
+                    EmailObj.removeClass("is-valid").addClass("is-invalid");
+                } else {
+                    EmailObj.removeClass("is-invalid").addClass("is-valid");
+                }
+            });
             $('#province').change(function() {
+                $('#amphure').html('<option selected="selected" value="">เลือกอำเภอ</option>');
+                $('#amphure').val() == 0
+                $('#district').html('<option selected="selected"  value="">เลือกตำบล</option>');
                 // console.log($("#province").val())
                 // console.log($(this).children(":selected").attr("id"))
-                if ($("#province").val() == "0") {
-                    $('#amphure').html('<option selected="selected" value="">เลือกอำเภอ</option>');
-                    $('#amphure').val() == 0
-                    $('#district').html('<option selected="selected"  value="">เลือกตำบล</option>');
+                if ($("#province").val() == "") {
+                    $("#province").removeClass("is-valid").addClass("is-invalid");
                     $("#amphure").prop('disabled', true);
 
                 } else {
@@ -315,39 +417,43 @@ require_once "thailand.inc.php";
                             console.log(data)
                             $.each(data, function(index, item) {
                                 $('#amphure').append(
-                                    $('<option></option>').val(item.name_th).html(item.name_th).attr('id',item.id)
+                                    $('<option></option>').val(item.name_th).html(item.name_th).attr('id', item.id)
 
                                 );
                             });
-                            
+
                         }
                     });
                     $("#amphure").prop('disabled', false);
                 }
             });
             $('#amphure').change(function() {
-                $('#district').html('<option selected="selected"  value="">เลือกตำบล</option>');
+                if ($('#amphure').val() == "" || $('#amphure').val() == "0") {
+                    $('#district').html('<option selected="selected"  value="">เลือกตำบล</option>');
+
+                    console.log($(this).children(":selected").attr("id"))
+                    console.log($(this).children(":selected").attr("value"))
+                }
                 $("#district").prop('disabled', false)
-                console.log($(this).children(":selected").attr("id"))
-                console.log($(this).children(":selected").attr("value"))
                 $.ajax({
                     url: 'register.control.php',
-                    method: "POST", 
-                    data : {
-                        amphure_id : $(this).children(":selected").attr("id")
-                    },success: function(result){
+                    method: "POST",
+                    data: {
+                        amphure_id: $(this).children(":selected").attr("id")
+                    },
+                    success: function(result) {
                         var data = JSON.parse(result);
                         $.each(data, function(index, item) {
-                        $('#district').append(
-                                    $('<option></option>').val(item.name_th).html(item.name_th).attr('id',item.id)
+                            $('#district').append(
+                                $('<option></option>').val(item.name_th).html(item.name_th).attr('id', item.id)
 
-                                );
+                            );
                         });
                         console.log(data)
 
                     }
 
-                  
+
                 });
                 // if($('#province').val()=="0"){
 
@@ -357,5 +463,25 @@ require_once "thailand.inc.php";
     </script>
 
 </body>
+<!-- Modal -->
+<div class="modal fade font" id="DataModal" tabindex="-1" role="dialog" aria-labelledby="DataModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="DataModalLabel">Register</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id='ShowOutput' align='center'>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id='Finish' class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </html>

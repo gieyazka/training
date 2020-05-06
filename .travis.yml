@@ -20,3 +20,10 @@ install:
 
 script:
   - echo 'Tests must be configured'
+
+language: node_js
+node_js:
+  - "4.2.4"
+before_script:
+  - npm install -g grunt-cli
+

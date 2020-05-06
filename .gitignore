@@ -36,3 +36,9 @@ docs_html/
 TODO
 test.html
 ad.js
+
+
+node_modules
+.DS_Store
+.idea/
+
