@@ -1,6 +1,7 @@
 <?php
 require_once "connect.php";
 require_once "thailand.inc.php";
+require_once "register.query.php";
 // print_r(PDO::getAvailableDrivers());
 
 ?>
@@ -46,7 +47,7 @@ require_once "thailand.inc.php";
         -moz-text-align-last: center;
         width: 100%;
         border: none;
-        font-size: 40px;
+        font-size: 30px;
 
     }
 
@@ -166,13 +167,17 @@ require_once "thailand.inc.php";
                                     <div class="card-header">
 
                                         <select class='test font se' id="subject" name='subject'>
-                                            <option value="volvo">Volvo</option>
-                                            <option value="saab">Saab</option>
-                                            <option value="mercedes">Mercedes</option>
-                                            <option value="audi">Audi</option>
-                                        </select>
+                                            <?php
+                                                $GetEvent = new register();
+                                                $row = $GetEvent->getEvent();
+                                                print_r($row);
+                                                for($i=0 ; $i < sizeof($row);$i++){
+                                                    echo "<option value='{$row[$i]['Event_Name']}'>{$row[$i]['Event_Name']}</option>";
+                                                }
+                                            ?>
+                                        </select> 
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body" id='ShowQR'>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-address-card"></i></span>
@@ -361,7 +366,8 @@ require_once "thailand.inc.php";
                     success: function(result) {
                         // alert(result)
                         if (result == "") {
-                            $("#ShowOutput").html("กรอกครบแล้ว")
+                            $("#ShowOutput").html("ลงทะเบียนสำเร็จ")
+                            $('#Finish').show()
                         } else {
                             $("#ShowOutput").html(result)
                             $('#Finish').hide()
@@ -426,6 +432,9 @@ require_once "thailand.inc.php";
                     });
                     $("#amphure").prop('disabled', false);
                 }
+            });
+            $('#Finish').click(function() {
+                $('#ShowQR').html("ได้แล้ว")
             });
             $('#amphure').change(function() {
                 if ($('#amphure').val() == "" || $('#amphure').val() == "0") {

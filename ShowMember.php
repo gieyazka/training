@@ -1,3 +1,6 @@
+<?php
+require_once 'ShowMember.query.php';
+?>
 <!DOCTYPE html>
 <html>
 
@@ -20,6 +23,32 @@
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
+<style>
+    .se {
+        text-align: center;
+        text-align-last: center;
+        -moz-text-align-last: center;
+        width: 100%;
+        border: none;
+        font-size: 20px;
+
+    }
+
+    option {
+        text-align: center;
+    }
+
+    .test {
+
+        background: rgba(0, 123, 255, 1);
+        color: #fff;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    .font {
+        font-family: 'Kanit', sans-serif;
+    }
+</style>
 
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -32,14 +61,9 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>DataTables</h1>
+                            <h1>ระบบยืนยันตน</h1>
                         </div>
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">DataTables</li>
-                            </ol>
-                        </div>
+
                     </div>
                 </div><!-- /.container-fluid -->
             </section>
@@ -51,42 +75,46 @@
                 </div>
                 <!-- /.card -->
 
-                <div class="card">
+
+                <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">DataTable with default features</h3>
+                        <select name="EventName" class="font test se" id="EventName">
+                            <option value="" selected="selected">เลือกกิจกรรม</option>
+                            <?php
+                            $obj = new ShowMember;
+                            $EventName = $obj->getEventName();
+                            for ($i = 0; $i < sizeof($EventName); $i++) {
+                                echo "<option value='{$EventName[$i]['Event_Name']}'>{$EventName[$i]['Event_Name']}</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body">
+                    <div class="card-body "id='Showtable'>
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Rendering engine</th>
-                                    <th>Browser</th>
-                                    <th>Platform(s)</th>
-                                    <th>Engine version</th>
-                                    <th>CSS grade</th>
+                                    <th>หมายเลขบัตรประชาชน</th>
+                                    <th>ชื่อ - นามสกุล</th>
+                                    <th>วันเกิด</th>
+                                    <th>ที่อยู่</th>
+                                    <th>โรงเรียน</th>
+                                    <th>เพิ่มเติม</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Trident</td>
-                                    <td>Internet
-                                        Explorer 4.0
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td> 4</td>
-                                    <td>X</td>
-                                </tr>
+                            <tbody id=''>
+                               
 
-                              
+
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Rendering engine</th>
-                                    <th>Browser</th>
-                                    <th>Platform(s)</th>
-                                    <th>Engine version</th>
-                                    <th>CSS grade</th>
+                                    <th>หมายเลขบัตรประชาชน</th>
+                                    <th>ชื่อ - นามสกุล</th>
+                                    <th>วันเกิด</th>
+                                    <th>ที่อยู่</th>
+                                    <th>โรงเรียน</th>
+                                    <th>เพิ่มเติม</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -132,7 +160,26 @@
                 "responsive": true,
                 "autoWidth": false,
             });
-          
+
+        });
+    </script>
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            $('#EventName').change(function() {
+                $.ajax({
+                    url: 'ShowMember.control.php',
+                    method: "POST",
+                    data: {
+                        EventName: $('#EventName').val(),
+                        action: '1'
+
+                    },
+                    success: function(result) {
+                        $('#Showtable').html("")
+                        $('#Showtable').html(result)
+                    }
+                });
+            });
         });
     </script>
 </body>

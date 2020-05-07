@@ -1,4 +1,5 @@
 <?php
+require_once "connect.php";
 require_once "thailand.inc.php";
 if (isset($_POST['province_id'])) {
     $obj = new thailand;
@@ -70,7 +71,7 @@ if (@$_POST['action'] == '1') {
             $str .= "กรุณารหัสไปรษณีย์ให้ถูกต้อง" . "<br>";
         }
     }
-    @$Subject = $_POST['Subject'];
+    @$Subject = $_POST['subject'];
     @$Foot = $_POST['Foot'];
     @$district = $_POST['district'];
     @$Province = $_POST['Province'];
@@ -122,6 +123,12 @@ if (@$_POST['action'] == '1') {
         }
     }
     echo $str;
+    if($str == ""){
+        require_once "register.query.php";
+        $Home = $Address." ".$Amphure." ".$district." ".$Province." ".$Zipcode ;
+        $obj = new register;
+        $query = $obj->insertRegis($Pid,$Email,$Fname,$Lname,$Birthdate,$Home,$School,$Class,$Foot,$Tel,$Parent_tel,$salary,$Subject);
+    }
 }
 function test_input($data)
 {
