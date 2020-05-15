@@ -10,7 +10,7 @@ require_once 'ShowMember.query.php';
     <title></title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+   
     <!-- Font Awesome -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
@@ -40,7 +40,7 @@ require_once 'ShowMember.query.php';
 
     .test {
 
-        background: rgba(0, 123, 255, 1);
+        background: rgba(32, 201, 151, 1);
         color: #fff;
         text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
     }
@@ -51,6 +51,7 @@ require_once 'ShowMember.query.php';
 </style>
 
 <body class="hold-transition sidebar-mini">
+
     <div class="wrapper">
 
 
@@ -74,9 +75,9 @@ require_once 'ShowMember.query.php';
 
                 </div>
                 <!-- /.card -->
+                
 
-
-                <div class="card card-primary">
+                <div class="card card-teal">
                     <div class="card-header">
                         <select name="EventName" class="font test se" id="EventName">
                             <option value="" selected="selected">เลือกกิจกรรม</option>
@@ -90,34 +91,8 @@ require_once 'ShowMember.query.php';
                         </select>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body "id='Showtable'>
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>หมายเลขบัตรประชาชน</th>
-                                    <th>ชื่อ - นามสกุล</th>
-                                    <th>วันเกิด</th>
-                                    <th>ที่อยู่</th>
-                                    <th>โรงเรียน</th>
-                                    <th>เพิ่มเติม</th>
-                                </tr>
-                            </thead>
-                            <tbody id=''>
-                               
+                    <div class="card-body " id='Showtable'>
 
-
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>หมายเลขบัตรประชาชน</th>
-                                    <th>ชื่อ - นามสกุล</th>
-                                    <th>วันเกิด</th>
-                                    <th>ที่อยู่</th>
-                                    <th>โรงเรียน</th>
-                                    <th>เพิ่มเติม</th>
-                                </tr>
-                            </tfoot>
-                        </table>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -144,6 +119,8 @@ require_once 'ShowMember.query.php';
     <script src="plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- toast  -->
+
     <!-- DataTables -->
     <script src="plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -163,8 +140,10 @@ require_once 'ShowMember.query.php';
 
         });
     </script>
+ 
     <script type='text/javascript'>
         $(document).ready(function() {
+
             $('#EventName').change(function() {
                 $.ajax({
                     url: 'ShowMember.control.php',

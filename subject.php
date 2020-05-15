@@ -83,8 +83,8 @@ require_once "thailand.inc.php";
         <div class="col-md-2">
         </div>
         <div class="col-md-8">
-            <form role="form" action="#" method="POST" id='AddEvent'>
-                <div class="card card-primary">
+            <form id='AddEvent'>
+                <div class="card card-teal">
                     <div class="card-header">
                         <h3 class="card-title">เพิ่มกิจกรรม</h3>
                     </div>
@@ -100,7 +100,7 @@ require_once "thailand.inc.php";
                     <!-- /.card-body -->
 
                     <div class="card-footer">
-                        <button type="button" id='SendData' data-toggle="modal" data-target="#DataModal" style="width:100%" class="btn btn-primary">Submit</button>
+                        <button type="button" id='SendData' data-toggle="modal" data-target="#DataModal" style="width:100%" class="btn navbar-teal">Submit</button>
                     </div>
             </form>
         </div>
@@ -152,7 +152,7 @@ require_once "thailand.inc.php";
                 success: function(result) {
                     $("#ShowOutput").html(result)
                     if (result == "เพิ่มกิจกรรมสำเร็จ") {
-                        location.reload();
+                        // location.reload();
                     }
 
                 }

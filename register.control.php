@@ -1,6 +1,7 @@
 <?php
 require_once "connect.php";
 require_once "thailand.inc.php";
+require_once "register.query.php";
 if (isset($_POST['province_id'])) {
     $obj = new thailand;
     $amphure = $obj->getamphures($_POST['province_id']);
@@ -110,7 +111,7 @@ if (@$_POST['action'] == '1') {
         $str .= "กรุณากรอกโรงเรียน" . "<br>";
     } else {
         $School = test_input($_POST["School"]);
-        if (!preg_match("/^[0-9a-zA-Zก-์ ะ-ู เ-แ.\/ ]*$/", $School) ) {
+        if (!preg_match("/^[0-9a-zA-Zก-์ ะ-ู เ-แ.\/ ]*$/", $School)) {
             $str .= "กรุณาโรงเรียนให้ถูกต้อง" . "<br>";
         }
     }
@@ -118,16 +119,27 @@ if (@$_POST['action'] == '1') {
         $str .= "กรุณากรอกระดับชั้น" . "<br>";
     } else {
         $Class = test_input($_POST["Class"]);
-        if (!preg_match("/^[0-9a-zA-Zก-์ ะ-ู เ-แ.\/ ]*$/", $Class) ) {
+        if (!preg_match("/^[0-9a-zA-Zก-์ ะ-ู เ-แ.\/ ]*$/", $Class)) {
             $str .= "กรุณาระดับชั้นให้ถูกต้อง" . "<br>";
         }
     }
     echo $str;
-    if($str == ""){
-        require_once "register.query.php";
-        $Home = $Address." ".$Amphure." ".$district." ".$Province." ".$Zipcode ;
+    if ($str == "") {
+
+        $Home = $Address . " " . $Amphure . " " . $district . " " . $Province . " " . $Zipcode;
         $obj = new register;
-        $query = $obj->insertRegis($Pid,$Email,$Fname,$Lname,$Birthdate,$Home,$School,$Class,$Foot,$Tel,$Parent_tel,$salary,$Subject);
+        $query = $obj->insertRegis($Pid, $Email, $Fname, $Lname, $Birthdate, $Home, $School, $Class, $Foot, $Tel, $Parent_tel, $salary, $Subject);
+        // echo $query;
+
+    }
+}
+if (@$_POST['action'] == '2') {
+    $Pid = $_POST['Pid'];
+    $obj = new register;
+    $checkmember = $obj->getMember($Pid);
+    if (!$checkmember == TRUE) {
+        $QRCode = $obj->GenQR($Pid);
+        echo $QRCode . "<br><br>" . "กรุณานำ QR-CODE ไปสแกนเพื่อยืนยันตนหน้างาน";
     }
 }
 function test_input($data)
