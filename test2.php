@@ -4,7 +4,7 @@ require_once "thailand.inc.php";
 require_once "register.query.php";
 require_once 'ShowMember.query.php';
 // print_r(PDO::getAvailableDrivers());
-if (@$_POST['action'] == '1') {
+if (@$_POST['action'] == '') {
 ?>
 
     <!DOCTYPE html>
@@ -264,12 +264,12 @@ if (@$_POST['action'] == '1') {
                 // setup validate
                 $.validate();
             });
-         
+            
                 $('#reservationdate').datetimepicker({
-                    // format: 'L'
+                    format: 'L'
                     // format: 'DD/MM/YYYY'
                 });
-           
+         
 
             function validateEmail($email) {
                 var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
@@ -478,5 +478,5 @@ if (@$_POST['action'] == '1') {
 
     </html>
 <?php } else {
-    header('Location: UserMenu');
+    // header('Location: UserMenu');
 } ?>

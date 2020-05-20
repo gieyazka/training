@@ -74,7 +74,7 @@ require_once "thailand.inc.php";
 
 
 <!-- general form elements -->
-
+<body class="hold-transition sidebar-mini">
 
     <!-- /.card-header -->
     <!-- form start -->
@@ -105,7 +105,7 @@ require_once "thailand.inc.php";
             </form>
         </div>
     </div>
-
+</body>
 <!-- /.card -->
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>

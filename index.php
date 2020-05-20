@@ -74,15 +74,16 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
     </style>
     <input type="hidden" name="refresh" id="refresh" value="<?php echo @$_GET['re']; ?>">
 
-    <body class="hold-transition sidebar-mini navbar-dark navbar-gray-dark font">
+    <body id='body' class="hold-transition sidebar-mini sidebar-collapse font">
+
 
         <div class="wrapper">
             <!-- Navbar -->
             <nav class="main-header navbar navbar-expand navbar-dark navbar-gray-dark">
                 <!-- Left navbar links -->
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                    <li class="nav-item" id='sb'>
+                        <a class="nav-link" href="#" role="button"><i class="fas fa-bars"></i></a>
                     </li>
 
                     <li class="nav-item d-none d-sm-inline-block">
@@ -100,7 +101,7 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
             <!-- /.navbar -->
 
             <!-- Main Sidebar Container -->
-            <aside class="main-sidebar sidebar-dark-primary elevation-4 navbar-dark navbar-gray-dark ">
+            <aside class="main-sidebar sidebar-dark-primary elevation-4 navbar-dark sidebar-gray-dark ">
                 <!-- Brand Logo -->
                 <a href="index3.html" class="brand-link">
                     <img src="dist/img/Logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -116,6 +117,12 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+                            <li class="nav-item curMove">
+                                <a id='Dashboard' class="nav-link">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <p>Dashboard</p>
+                                </a>
+                            </li>
                             <li class="nav-item has-treeview">
                                 <a class="nav-link curMove">
                                     <i class="nav-icon fas fa-futbol"></i>
@@ -130,6 +137,13 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                                             <i class="fas fa-futbol fa-circle nav-icon"></i>
 
                                             <p id=''>ระบบเพิ่มกิจกรรม</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item curMove">
+                                        <a id='manageEvent' class="nav-link">
+                                            <i class="fas fa-calendar-week nav-icon"></i>
+                                          
+                                            <p>จัดการกิจกรรม</p>
                                         </a>
                                     </li>
                                     <li class="nav-item curMove">
@@ -159,9 +173,9 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                                             </a>
                                         </li>
                                         <li class="nav-item curMove">
-                                            <a id='ShowMember' class="nav-link">
+                                            <a id='Keep' class="nav-link">
                                                 <i class="fas fa-male fa-circle nav-icon"></i>
-                                                <p>ระบบยืนยันตน</p>
+                                                <p>จัดเก็บกิจกรรม</p>
                                             </a>
                                         </li>
 
@@ -197,100 +211,7 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                 <!-- Main content -->
                 <section class="content">
                     <div class="container-fluid" id='ShowData'>
-                        <div class="row">
-                            <!-- left column -->
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-8">
-                                <!-- general form elements -->
-                                <div class="card card-primary" id=''>
-                                    <div class='row'>
-                                        <div class=' col-6'>
-                                            <div class='info-box'>
-                                                <span class='info-box-icon bg-info col-3'><i class='fas fa-user'></i></span>
 
-                                                <div class='info-box-content'>
-                                                    <span class='info-box-text'>จำนวนผู้สมัครทั้งหมด</span>
-                                                    <span class='info-box-number'>3000000</span>
-                                                </div>
-                                                <!-- /.info-box-content -->
-                                            </div>
-                                            <!-- /.info-box -->
-                                        </div>
-                                        <div class=' col-6'>
-                                            <div class='info-box'>
-                                                <span class='info-box-icon bg-info col-3'><i class="fas fa-calendar-week"></i></span>
-
-                                                <div class='info-box-content'>
-                                                    <span class='info-box-text'>จำนวนกิจกรรมทั้งหมด</span>
-                                                    <span class='info-box-number'>150000</span>
-                                                </div>
-                                                <!-- /.info-box-content -->
-                                            </div>
-                                            <!-- /.info-box -->
-                                        </div>
-                                    </div>
-                                    <?php
-
-                                    $obj = new ShowMember;
-                                    $EventName = $obj->getEventName();
-                                    $countSubject = new ShowMember;
-
-                                    for ($i = 0; $i < sizeof($EventName); $i += 2) {
-
-                                        echo " <div class='row'>";
-                                        // echo $EventName[$i]['Event_Name'];
-
-                                        for ($j = 0; $j < 1; $j++) {
-
-                                            @$Count = $countSubject->EventCount($EventName[$i]['Event_Name']);
-                                            @$Count2 = $countSubject->EventCount($EventName[$i + 1]['Event_Name']);
-                                            // echo "<pre>";
-                                            // echo print_r($Count);
-                                            // echo "</pre>";
-                                    ?>
-
-                                            <div class=' col-6'>
-                                                <div class='info-box'>
-                                                    <span class='info-box-icon bg-info col-3'><i class='fas fa-user-plus'></i></span>
-
-                                                    <div class='info-box-content'>
-                                                        <span class='info-box-text'><?php echo $EventName[$i]['Event_Name']; ?></span>
-                                                        <span class='info-box-number'><?php echo "จำนวนผู้สมัคร " . $Count[$j]['count'] . " คน"; ?></span>
-                                                    </div>
-                                                    <!-- /.info-box-content -->
-                                                </div>
-                                                <!-- /.info-box -->
-                                            </div>
-                                            <!-- /.col -->
-                                            <?php if (@$EventName[$i + 1]['Event_Name'] != "") { ?>
-                                                <div class=' col-6'>
-                                                    <div class='info-box'>
-                                                        <span class='info-box-icon bg-info col-3'><i class="fas fa-registered"></i></span>
-
-                                                        <div class='info-box-content'>
-                                                            <span class='info-box-text'><?php echo @$EventName[$i + 1]['Event_Name']; ?></span>
-                                                            <span class='info-box-number'><?php echo "จำนวนผู้สมัคร " . @$Count2[$j]['count'] . " คน"; ?></span>
-                                                        </div>
-                                                        <!-- /.info-box-content -->
-                                                    </div>
-                                                    <!-- /.info-box -->
-                                                </div>
-                                                <!-- /.col -->
-                                            <?php  } ?>
-
-                                </div>
-                                <!-- /.row -->
-
-
-                        <?php     }
-                                    }
-
-                        ?>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
                     </div>
                     <!--/.col (right) -->
             </div>
@@ -298,9 +219,10 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
         </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->
+        <div id="sidebar-overlay"></div>
         </div>
         <!-- /.content-wrapper -->
-        <footer class="main-footer navbar-dark navbar-gray-dark">
+        <footer class="main-footer ">
             <div class="float-right d-none d-sm-block">
                 <strong>Copyright &copy; 2020 <a href='#'>Sirky</a>.</strong>
             </div>
@@ -332,6 +254,52 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
         <script src="dist/js/demo.js"></script>
         <script src="form-validator/jquery.form-validator.js"></script>
         <script>
+            $('#manageEvent').click(function(){
+                $.ajax({
+                        url: 'manageEvent.php',
+                        method: 'POST',
+                        success: function(result) {
+                            $('#ShowData').html(result)
+                        }
+                    })
+            })
+            if ($('#refresh').val() != "") {
+                if ($('#refresh').val() == "1") {
+                    $.ajax({
+                        url: 'Employee.php',
+                        method: 'POST',
+                        success: function(result) {
+                            $('#ShowData').html(result)
+                        }
+                    })
+                }
+                if ($('#refresh').val() == "2") {
+                    $.ajax({
+                        url: 'Keep.php',
+                        method: 'POST',
+                        success: function(result) {
+                            $('#ShowData').html(result)
+                        }
+                    })
+                }
+                if ($('#refresh').val() == "3") {
+                    $.ajax({
+                        url: 'manageEvent.php',
+                        method: 'POST',
+                        success: function(result) {
+                            $('#ShowData').html(result)
+                        }
+                    })
+                }
+            } else {
+                $.ajax({
+                    url: 'dashboard.php',
+                    method: 'POST',
+                    success: function(result) {
+                        $('#ShowData').html(result)
+                    }
+                })
+            }
             $(function() {
                 // setup validate
                 $.validate();
@@ -342,55 +310,92 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                     format: 'DD/MM/YYYY'
                 });
             })
-        </script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('#logout').click(function() {
-                    window.location.href = 'logout'
-                })
-                if ($('#refresh').val() != "") {
-                    if ($('#refresh').val() == "1") {
-                        $.ajax({
-                            url: 'Employee.php',
-                            method: 'POST',
-                            success: function(result) {
-                                $('#ShowData').html(result)
-                            }
-                        })
+            $('#logout').click(function() {
+                window.location.href = 'logout'
+            })
+
+
+            $('#Dashboard').click(function() {
+                $.ajax({
+                    url: 'dashboard.php',
+                    method: 'POST',
+                    success: function(result) {
+                        $('#ShowData').html(result)
                     }
-                }
-                bsCustomFileInput.init();
-                $('#ControlEmployee').click(function() {
-                    $.ajax({
-                        url: 'Employee.php',
-                        method: 'POST',
-                        success: function(result) {
-                            $('#ShowData').html(result)
-                        }
-                    })
-
                 })
-                $('#addEvent').click(function() {
-                    $.ajax({
-                        url: 'subject.php',
-                        method: 'POST',
-                        success: function(result) {
-                            $('#ShowData').html(result)
-                        }
-                    })
 
+            })
+            $('#ControlEmployee').click(function() {
+                $.ajax({
+                    url: 'Employee.php',
+                    method: 'POST',
+                    success: function(result) {
+                        $('#ShowData').html(result)
+                    }
+                })
+
+            })
+            $('#addEvent').click(function() {
+                $.ajax({
+                    url: 'subject.php',
+                    method: 'POST',
+                    success: function(result) {
+                        $('#ShowData').html(result)
+                    }
+                })
+
+            });
+            $('#ShowMember').click(function() {
+                $.ajax({
+                    url: "ShowMember.php",
+                    success: function(result) {
+                        $('#ShowData').html(result)
+                        // console.log(result)
+                    }
                 });
-                $('#ShowMember').click(function() {
-                    $.ajax({
-                        url: "ShowMember.php",
-                        success: function(result) {
-                            $('#ShowData').html(result)
-                            // console.log(result)
-                        }
-                    });
+            });
+            $('#Keep').click(function() {
+                $.ajax({
+                    url: "Keep.php",
+                    success: function(result) {
+                        $('#ShowData').html(result)
+                        // console.log(result)
+                    }
                 });
             });
         </script>
+        <script>
+            $(document).ready(function() {
+                bsCustomFileInput.init();
+
+
+            });
+
+            $('#sb').click(function() {
+
+                if ($('#body').hasClass('sidebar-collapse')) {
+                    $('#body').removeClass('sidebar-collapse');
+
+                } else {
+                    $('#body').addClass('sidebar-collapse');
+
+                }
+                if ($('#body').hasClass('sidebar-open')) {
+                    $('#body').removeClass('sidebar-open');
+                    $('#body').addClass('sidebar-close');
+
+                } else {
+                    $('#body').removeClass('sidebar-close');
+                    $('#body').addClass('sidebar-open');;
+                }
+
+            })
+            $('#sidebar-overlay').click(function() {
+                $('#body').removeClass('sidebar-open');
+                $('#body').addClass('sidebar-close');
+            })
+        </script>
+
 
     </body>
     <!-- Modal -->

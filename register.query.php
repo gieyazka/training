@@ -26,6 +26,14 @@ class register extends Dbh
         $Event = $stmt->fetchAll();
         return $Event;
     }
+    public function getField($Event_ID)
+    {
+        $sql = "select * from event where Event_ID = ? ";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$Event_ID]);
+        $Event = $stmt->fetch();
+        return $Event;
+    }
     public function getMember($Pid)
     {
         $sql = "select * from member where Member_PID = ?";
