@@ -178,6 +178,12 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                                                 <p>จัดเก็บกิจกรรม</p>
                                             </a>
                                         </li>
+                                        <li class="nav-item curMove">
+                                            <a id='PastEvent' class="nav-link">
+                                                <i class="fas fa-male fa-circle nav-icon"></i>
+                                                <p>ข้อมูลกิจกรรมย้อนหลัง</p>
+                                            </a>
+                                        </li>
 
                                     </ul>
                                 </li>
@@ -363,6 +369,15 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                     }
                 });
             });
+            $('#PastEvent').click(function(){
+                $.ajax({
+                    url: "PastEvent.php",
+                    success: function(result) {
+                        $('#ShowData').html(result)
+                        // console.log(result)
+                    }
+                });
+            })
         </script>
         <script>
             $(document).ready(function() {

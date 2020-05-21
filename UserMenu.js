@@ -3,8 +3,8 @@
 
 
 $('#reservationdate').datetimepicker({
-    format: 'L'
-    // format: 'DD/MM/YYYY'
+    // format: 'L'
+    format: 'DD/MM/YYYY'
 });
 function validateEmail($email) {
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
@@ -57,7 +57,22 @@ $('#other').click(function () {
 
 
 
+$('#Finish').click(function () {
 
+    $('#footFinish').html("")
+    $.ajax({
+        url: 'register.control.php',
+        method: "POST",
+        data: {
+            Pid: $('#Pid').val(),
+            action: 2
+        },
+        success: function (data) {
+            $("#ShowQR").html(data)
+        }
+    });
+
+});
 SendData.click(function () {
     // $('#Form_Register').submit()
     if ($('.bootstrap-switch-id-sexget').hasClass('bootstrap-switch-on')) {

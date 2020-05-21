@@ -343,7 +343,7 @@ require_once 'ShowMember.query.php';
                                                     <label for="coach">&nbspโค้ช /อาจารย์&nbsp</label>
                                                 </div>
                                                 <div class="icheck-primary d-inline">
-                                                    <input type="checkbox" id="sign" name='info[]' class='check' value="ป้าบยประกาศ">
+                                                    <input type="checkbox" id="sign" name='info[]' class='check' value="ป้ายประกาศ">
                                                     <label for="sign">&nbspป้ายประกาศ &nbsp</label>
                                                 </div>
                                                 <div class="icheck-primary d-inline">

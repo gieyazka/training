@@ -201,10 +201,21 @@ if (@$_POST['action'] == '1') {
     }
     echo $str;
     if ($str == "") {
-
+        $info ="" ;
         $Home = $Address . " " . $Amphure . " " . $district . " " . $Province . " " . $Zipcode;
+        for($i = 0 ;$i<sizeof($_POST['info']);$i++){
+            $info .= $_POST['info'][$i]." " ;
+        }
+
+        // print_r($_POST['info']);
+        // echo $info;
         $obj = new register;
-        $query = $obj->insertRegis($Pid, $Email, $Fname, $Lname, $Birthdate, $Home, $School, $Class, $Foot, $Tel, $Parent_tel, $salary, $Subject);
+        $query = $obj->insertRegis($_POST['Pid'],$_POST['Email'],$_POST['Fname'],$_POST['Lname'],$_POST['EFname'],$_POST['ELname'],$_POST['Nickname'],$_POST['sex'],$_POST['Height'],$_POST['Birthdate'],$_POST['Age'],$Home,$_POST['School'],$_POST['Class'],$_POST['Foot'],$_POST['Tel'],$_POST['Parent_tel'],$_POST['salary'],$_POST['subject'],$_POST['club'],$_POST['Position'],$_POST['Field'],$_POST['Pname'],$info);
+//    echo "({$_POST['Pid']}, {$_POST['Email']},{$_POST['Fname']},{$_POST['Lname']},{$_POST['EFname']},{$_POST['ELname']},
+//        {$_POST['Nickname']},{$_POST['sex']},{$_POST['Height']},{$_POST['Birthdate']},{$_POST['Age']},{$Home},{$_POST['School']},{$_POST['Class']}
+//        ,{$_POST['Foot']},{$_POST['Tel']},{$_POST['Parent_tel']},{$_POST['salary']},{$_POST['subject']},{$_POST['club']},{$_POST['Position']},{$_POST['Field']}
+//        ,{$_POST['Pname']},{$info})";
+  
         // echo $query;
 
     }
