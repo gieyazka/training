@@ -35,6 +35,10 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
             text-align: center;
         }
 
+        .curMove {
+            cursor: pointer;
+        }
+
         body {
             font-family: 'Kanit', sans-serif;
         }
@@ -64,6 +68,7 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                             <th>กิจกรรม</th>
                             <th>จำนวนผู้เข้าร่วม</th>
                             <th>จัดการ</th>
+                            <th>excel</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,6 +79,7 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                             echo "<th>{$data[$i]['Event_Name']}</th>";
                             echo "<th class='ctext'>{$data[$i]['count']}</th>";
                             echo "<th class='ctext'><button type='button' class='btn btn-primary SendKeep' id='{$data[$i]['count']}' data-event='{$data[$i]['Event_Name']}'>เก็บกิจกรรม</button></th>";
+                            echo "<th class='ctext'><i class='far fa-file-excel fa-3x  curMove excel' data-event='{$data[$i]['Event_Name']}'></th>" ;
                             echo "</tr>";
                         }
                         ?>
@@ -83,6 +89,7 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                             <th>กิจกรรม</th>
                             <th>จำนวนผู้เข้าร่วม</th>
                             <th>จัดการ</th>
+                            <th>excel</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -130,6 +137,11 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
         </div>
     </div>
     <script type="text/javascript">
+         var Toast = Swal.mixin({
+                showConfirmButton: false,
+                timer: 2000,
+
+            });
         $(function() {
             $("#example1").DataTable({
                 "responsive": true,
@@ -142,12 +154,10 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
 
 
         });
-        $(document).ready(function() {
-            const Toast = Swal.mixin({
-                showConfirmButton: false,
-                timer: 2000,
 
-            });
+        $(document).ready(function() {
+       
+
             $('.SendKeep').each(function() {
                 $(this).click(function() {
                     $.ajax({
@@ -169,6 +179,18 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                     })
                     // alert($(this).attr('data-event'))
                     // alert($(this).attr('id'))
+                })
+
+            })
+            $('.excel').each(function() {
+       
+                $(this).click(function() {
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'ดาวโหลดสำเร็จ',
+
+                    })
+                    window.open("Keep.control.php?action=2&Event_Name=" + $(this).attr('data-event'))
                 })
 
             })

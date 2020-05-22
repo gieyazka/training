@@ -189,12 +189,14 @@ $('#Finish').click(function () {
     });
 
 });
+
 $('#amphure').change(function () {
+    $('#district').html('<option selected="selected"  value="">เลือกตำบล</option>');
     if ($('#amphure').val() == "" || $('#amphure').val() == "0") {
         $('#district').html('<option selected="selected"  value="">เลือกตำบล</option>');
 
-        console.log($(this).children(":selected").attr("id"))
-        console.log($(this).children(":selected").attr("value"))
+        // console.log($(this).children(":selected").attr("id"))
+        // console.log($(this).children(":selected").attr("value"))
     }
     $("#district").prop('disabled', false)
     $.ajax({

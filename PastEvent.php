@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require_once "PastEvent.query.php";
 if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
@@ -33,6 +34,10 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
     <style>
         .ctext {
             text-align: center;
+        }
+
+        .curMove {
+            cursor: pointer;
         }
 
         body {
@@ -73,7 +78,7 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                             echo "<tr>";
                             echo "<th>{$data[$i]['Event_Name']}</th>";
                             echo "<th class='ctext'>{$data[$i]['Count']}</th>";
-                            echo "<th class='ctext'><i class='far fa-file-excel fa-2x excel' data-event='{$data[$i]['Event_Name']}'></i></th>";
+                            echo "<th class='ctext'><i class='far fa-file-excel fa-2x excel curMove' data-event='{$data[$i]['Event_Name']}'></i></th>";
                             echo "</tr>";
                         }
                         ?>
@@ -130,7 +135,6 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
         </div>
     </div>
     <script type="text/javascript">
-    
         $(function() {
             $("#example1").DataTable({
                 "responsive": true,
@@ -151,14 +155,18 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
             });
             $('.excel').each(function() {
                 $(this).click(function() {
-                    
-                    window.open("PastEvent.control.php?action=1&Event_Name="+$(this).attr('data-event'))
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'ดาวโหลดสำเร็จ',
+
+                    })
+                    window.open("PastEvent.control.php?action=1&Event_Name=" + $(this).attr('data-event'))
                     // $.ajax({
                     //     url: "PastEvent.control.php",
                     //     method: "POST",
                     //     data: {
                     //         Event_Name: $(this).attr('data-event'),
-                
+
                     //         action: 1
                     //     },
                     //     success: function(result) {

@@ -1,3 +1,7 @@
+<?php
+if(!isset($_GET['verify'])){ header('Location: http://www.mrpke.com/'); }
+$Email = base64_decode(base64_decode($_GET['verify']));
+?>
 <!DOCTYPE html>
 <html>
 
@@ -47,45 +51,36 @@
             <!-- /.login-logo -->
             <div class="card">
                 <div class="card-body login-card-body">
-                    <form id='login'>
+                    <p class="login-box-msg">กรอกรหัสผ่านใหม่</p>
+
+                    <form>
+                        <input type="hidden" name="Email" id="Email" value='<?php echo $Email ?>'>
                         <div class="input-group mb-3">
-                            <input type="text" name="username" class="form-control" placeholder="Username">
+                            <input type="password" id='Password' class="form-control" placeholder="Password">
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <span class="fas fa-user"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="password" name='password' class="form-control" placeholder="Password">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
+                                    <span class="fas fa-envelope"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-
-                            <!-- /.col -->
-
-                            <button type="button" id='btn' class="btn btn-primary btn-block">Sign In</button>
-
+                            <div class="col-12">
+                                <button type="button" id='btn' class="btn btn-primary btn-block">ยืนยัน</button>
+                            </div>
                             <!-- /.col -->
                         </div>
                     </form>
 
-
-                    <!-- /.social-auth-links -->
-                    <br>
-                    <p class="mb-1">
-                        <a href="forgot-password">forgot password</a>
+                    <p class="mt-3 mb-1">
+                        <a href="login">Login</a>
                     </p>
 
                 </div>
                 <!-- /.login-card-body -->
             </div>
         </div>
-        <!-- /.login-box -->
+    </div>
+    <!-- /.login-box -->
     </div>
     <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>
@@ -108,31 +103,19 @@
         });
         $('#btn').click(function() {
             $.ajax({
-                url: 'login.control.php',
-                method: 'POST',
-                data: $('#login').serialize() + "&action=1",
+                url: "resetEmail.control.php",
+                method: "POST",
+                data: {
+                    Email : $('#Email').val(),
+                    Password: $('#Password').val(),
+                    action: 1
+                },
                 success: function(result) {
-                    if (result == "") {
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'เข้าสู่ระบบไม่สำเร็จ',
-                            text: 'กรุณาตรวจสอบ Username หรือ Password'
-                        })
-                    } else {
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'เข้าสู่ระบบสำเร็จ',
-                            text: 'ยินดีต้อนรับ คุณ ' + result
-
-                        })
-                        setTimeout("location.href = 'index';", 2100);
-                    }
-                    // alert(result)
+                  
                 }
             })
-            // console.log($('#login').serialize())
+        })
 
-        });
     })
 </script>
 <script type="text/javascript">

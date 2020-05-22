@@ -15,4 +15,11 @@
             $row = $stmt->fetchAll();
             return $row ;
         }
+        public function getData2($Event_Name){
+            $sql = "select * from member where Subject = ?";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$Event_Name]);
+            $row = $stmt->fetchAll();
+            return $row ;
+        }
     }

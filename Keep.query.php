@@ -32,21 +32,27 @@ class Keep extends Dbh
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute([
                 $row[$i]['Member_PID'],  $row[$i]['Email'],  $row[$i]['Firstname'],  $row[$i]['Lastname'], $row[$i]['Firstname_EN'],
-                $row[$i]['Lastname_EN'],$row[$i]['Nickname'],$row[$i]['Sex'],$row[$i]['Height'],$row[$i]['Birthdate'],
-                $row[$i]['Age'], $row[$i]['Address'], $row[$i]['School'], $row[$i]['Class'],$row[$i]['Foot'],
-                $row[$i]['Tel'], $row[$i]['Parent_Tel'],$row[$i]['Salary'],$row[$i]['Subject'], $row[$i]['Club']
-                ,$row[$i]['Position'],$row[$i]['Field'],$row[$i]['Pname'],$row[$i]['Info'], $row[$i]['Active']
+                $row[$i]['Lastname_EN'], $row[$i]['Nickname'], $row[$i]['Sex'], $row[$i]['Height'], $row[$i]['Birthdate'],
+                $row[$i]['Age'], $row[$i]['Address'], $row[$i]['School'], $row[$i]['Class'], $row[$i]['Foot'],
+                $row[$i]['Tel'], $row[$i]['Parent_Tel'], $row[$i]['Salary'], $row[$i]['Subject'], $row[$i]['Club'], $row[$i]['Position'], $row[$i]['Field'], $row[$i]['Pname'], $row[$i]['Info'], $row[$i]['Active']
             ]);
         }
-        $sql = "INSERT INTO passevent(Event_Name,Count) VALUES (?,?) " ;
-        $stmt = $this->connect()->prepare($sql) ;
-        $stmt -> execute([$Event_Name,$Count]);
-        $sql = "DELETE FROM  member where Subject = ?" ;
-        $stmt = $this->connect()->prepare($sql) ;
-        $stmt -> execute([$Event_Name]);
-        $sql = "DELETE FROM  event where Event_Name = ?" ;
-        $stmt = $this->connect()->prepare($sql) ;
-        $stmt -> execute([$Event_Name]);
-
+        $sql = "INSERT INTO passevent(Event_Name,Count) VALUES (?,?) ";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$Event_Name, $Count]);
+        $sql = "DELETE FROM  member where Subject = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$Event_Name]);
+        $sql = "DELETE FROM  event where Event_Name = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$Event_Name]);
+    }
+    public function getData($Event_Name)
+    {
+        $sql = "select * from member where Subject = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$Event_Name]);
+        $row = $stmt->fetchAll();
+        return $row;
     }
 }
