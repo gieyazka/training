@@ -284,7 +284,7 @@ if (@$_SESSION['Status'] == 'Employee' || @$_SESSION['Status'] == 'Admin') {
         })
     </script>
     <script type="text/javascript">
-        const Toast = Swal.mixin({
+        var Toast = Swal.mixin({
             showConfirmButton: false,
             timer: 2000,
 

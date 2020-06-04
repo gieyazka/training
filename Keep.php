@@ -79,7 +79,7 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                             echo "<th>{$data[$i]['Event_Name']}</th>";
                             echo "<th class='ctext'>{$data[$i]['count']}</th>";
                             echo "<th class='ctext'><button type='button' class='btn btn-primary SendKeep' id='{$data[$i]['count']}' data-event='{$data[$i]['Event_Name']}'>เก็บกิจกรรม</button></th>";
-                            echo "<th class='ctext'><i class='far fa-file-excel fa-3x  curMove excel' data-event='{$data[$i]['Event_Name']}'></th>" ;
+                            echo "<th class='ctext'><i class='far fa-file-excel fa-2x  curMove excel' data-event='{$data[$i]['Event_Name']}'></th>" ;
                             echo "</tr>";
                         }
                         ?>

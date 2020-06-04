@@ -64,7 +64,7 @@ class register extends Dbh
         $encode = base64_encode("{$PID}&1");
         $host = stristr(stristr($_SERVER['REQUEST_URI'], strrchr($_SERVER['REQUEST_URI'], '/'), true), strrchr(stristr($_SERVER['REQUEST_URI'], strrchr($_SERVER['REQUEST_URI'], '/'), true), '/'), true);
         $link = 'https://' . $_SERVER['HTTP_HOST'] . $host . "/verify?verify='{$encode}'";
-        $qr = 'http://api.qrserver.com/v1/create-qr-code/?data=' . $link . '&size=300x300'; //gen QR
+        $qr = 'http://api.qrserver.com/v1/create-qr-code/?data=' . $link . '&size=200x200'; //gen QR
         $code = '<center><img src="' . $qr . '"  </center>';
         return $code;
     }

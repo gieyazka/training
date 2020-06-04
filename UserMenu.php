@@ -89,11 +89,11 @@ require_once 'ShowMember.query.php';
                 <li class="nav-item" id='sb'>
                     <a class="nav-link" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
+                <!-- <li class="nav-item d-none d-sm-inline-block">
                     <a href="index3.html" class="nav-link">Home</a>
-                </li>
+                </li> -->
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a href="#" data-toggle="modal" data-target="#modal-sm" class=" nav-link">Contact</a>
                 </li>
             </ul>
 
@@ -105,7 +105,7 @@ require_once 'ShowMember.query.php';
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4 navbar-dark navbar-gray-dark ">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
+            <a href="" class="brand-link">
                 <img src="dist/img/Logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">PYD COLOR</span>
             </a>
@@ -229,7 +229,7 @@ require_once 'ShowMember.query.php';
                                                 <input type="text" id='EFName' name='EFname' class="form-control col-3 EnName" data-validation="required" placeholder="ชื่อ (ภาษาอังกฤษ)">
                                                 <input type="text" id='ELName' name='ELname' class="form-control col-3 EnName" data-validation="required" placeholder="นามสกุล (ภาษาอังกฤษ)">
                                                 <input type="text" id='Nickname' name='Nickname' class="form-control col-3 " data-validation="required" placeholder="ชื่อเล่น">
-                                                <input type="text" id='Height' name='Height' class="form-control col-3 Name" data-validation="required" placeholder="ส่วนสูง">
+                                                <input type="text" id='Height' name='Height' class="form-control col-3" data-validation="required" placeholder="ส่วนสูง">
                                             </div>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
@@ -243,7 +243,7 @@ require_once 'ShowMember.query.php';
                                                     $provinces = $obj->getprovince();
 
                                                     for ($i = 0; $i < sizeof($provinces); $i++) {
-                                                        echo  "<option id='{$provinces[$i]["id"]}' value='{$provinces[$i]["name_th"]}'>{$provinces[$i]["name_th"]}</option> ";
+                                                        echo  "<option id='{$provinces[$i]["PROVINCE_ID"]}' value='{$provinces[$i]["PROVINCE_NAME"]}'>{$provinces[$i]["PROVINCE_NAME"]}</option> ";
                                                     }
 
                                                     ?>
@@ -261,8 +261,10 @@ require_once 'ShowMember.query.php';
                                                 <select id='district' name='district' data-validation="required" class="form-control select2 col-4" disabled style="width: 100%;">
                                                     <option value="" selected="selected">เลือกแขวง/ตำบล</option>
                                                 </select>
-                                                <input type="text" id='Zipcode' class="form-control col-4" name='Zipcode' data-validation="number" placeholder="รหัสไปรษณีย์">
-
+                                                <select id='Zipcode' name='Zipcode' data-validation="required" class="form-control select2 col-4" disabled style="width: 100%;">
+                                                    <option value="" selected="selected">เลือกรหัสไปรษณีย์</option>
+                                                </select>
+                                              
                                             </div>
 
                                             <div class="input-group mb-3">
@@ -281,7 +283,7 @@ require_once 'ShowMember.query.php';
                                                     <span class="input-group-text"><i class="fas fa-futbol"></i></span>
                                                 </div>
 
-                                                <input type="text" name='club' class=form-control col-6" placeholder="สังกัดทีม/สโมสร (ถ้ามี)">
+                                                <input type="text" name='club' class="form-control col-6" placeholder="สังกัดทีม/สโมสร (ถ้ามี)">
                                                 <input type="text" name='Position' id='Position' data-validation="required" class="form-control col-3" placeholder="ตำแหน่งที่ถนัด ">
 
                                                 <span class="input-group-text"><i class="fas fa-shoe-prints"></i></span>
@@ -431,7 +433,27 @@ require_once 'ShowMember.query.php';
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="modal-sm">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Contacts</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body cen">
+                <p>สอบถามเพิ่มเติม โทร 095-351-0873</p>
+                <p>หรือ @line : @ktaxa-u15</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+             
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 
 </html>
 <script type="text/javascript" src="UserMenu.js"></script>

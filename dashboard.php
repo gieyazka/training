@@ -2,6 +2,7 @@
 require_once "connect.php";
 require_once "thailand.inc.php";
 require_once 'ShowMember.query.php';
+require_once 'dashboard.query.php';
 // print_r(PDO::getAvailableDrivers());
 session_start();
 if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
@@ -98,6 +99,10 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                 </section>
 
                 <!-- Main content -->
+                <?php
+                $obj1 = new dashboard;
+
+                ?>
                 <section class="content">
                     <div class="container-fluid" id='ShowData'>
                         <div class="row">
@@ -111,7 +116,10 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                                         <!-- small card -->
                                         <div class="small-box bg-info">
                                             <div class="inner">
-                                                <h3>3000000</h3>
+                                            <?php
+                                                $row = $obj1->getRegis();
+                                                echo "<h3>{$row['count']}</h3>";
+                                                ?>
 
                                                 <p>จำนวนผู้สมัครทั้งหมด</p>
                                             </div>
@@ -125,7 +133,10 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                                         <!-- small card -->
                                         <div class="small-box bg-info">
                                             <div class="inner">
-                                                <h3>3000000</h3>
+                                                <?php
+                                                $row = $obj1->getEvent();
+                                                echo "<h3>{$row['count']}</h3>";
+                                                ?>
 
                                                 <p>จำนวนกิจกรรมที่กำลังดำเนินการ</p>
                                             </div>
@@ -139,7 +150,11 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                                         <!-- small card -->
                                         <div class="small-box bg-success">
                                             <div class="inner">
-                                                <h3>3000000</h3>
+                                                <?php
+                                                $row = $obj1->getPastEvent();
+                                                echo "<h3>{$row['count']}</h3>";
+                                                ?>
+
 
                                                 <p>จำนวนกิจกรรมที่ผ่านมา</p>
                                             </div>
@@ -153,7 +168,11 @@ if ($_SESSION['Status'] == 'Employee' || $_SESSION['Status'] == 'Admin') {
                                         <!-- small card -->
                                         <div class="small-box bg-success">
                                             <div class="inner">
-                                                <h3>3000000</h3>
+                                                <?php
+                                                $row = $obj1->getPastRegis();
+                                                echo "<h3>{$row['count']}</h3>";
+                                                ?>
+
 
                                                 <p>จำนวนผู้สมัครที่ผ่านมาทั้งหมด</p>
                                             </div>

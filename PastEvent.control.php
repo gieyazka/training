@@ -3,189 +3,130 @@
 require_once "PastEvent.query.php";
 // print_r($_REQUEST);
 if ($_REQUEST['action'] == '1') {
-    $name = $_POST['Event_Name'];
-    header('Content-Type: text/html; charset=tis620');
-    header("Content-Type: application/vnd.ms-excel"); // ประเภทของไฟล์
-    header("Content-Disposition: attachment; filename={$_REQUEST['Event_Name']}.xls"); //กำหนดชื่อไฟล์
-    header("Content-Type: application/force-download"); // กำหนดให้ถ้าเปิดหน้านี้ให้ดาวน์โหลดไฟล์
-    header("Content-Type: application/octet-stream");
-    header("Content-Type: application/download"); // กำหนดให้ถ้าเปิดหน้านี้ให้ดาวน์โหลดไฟล์
-    header("Content-Transfer-Encoding: binary");
-    header("Content-Length: " . filesize("myexcel.xls"));
-
-    @readfile($filename);
-?>
-    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-
-    <html>
-    <?php
-
     $obj = new PastEvent;
     $data = $obj->getData($_REQUEST['Event_Name']);
-    ?>
-
-    <body>
-        <table>
-            <tr>
-                <td>ลำดับ</td>
-                <td>กิจกรรมที่ลงสมัคร</td>
-                <td>เลขบัตรประชาชน</td>
-                <td>Email</td>
-                <td>ชื่อภาษาไทย</td>
-                <td>นามสกุลภาษาไทย</td>
-                <td>ชื่อภาษาอังกฤษ</td>
-                <td>นามสกุลภาษาอังกฤษ</td>
-                <td>ชื่อเล่น</td>
-                <td>เพศ</td>
-                <td>ส่วนสูง</td>
-                <td>วันเกิด</td>
-                <td>อายุ</td>
-                <td>ที่อยู่</td>
-                <td>โรงเรียน</td>
-                <td>ระดับชั้น</td>
-                <td>เท้าที่ถนัด</td>
-                <td>เบอร์โทรศัพท์</td>
-                <td>ชื่อผู้ปกครอง</td>
-                <td>เบอร์โทรศัพท์ผู้ปกครอง</td>
-                <td>เงินเดือนผู้ปกครอง</td>
-
-                <td>สังกัดทีม/สโมสร</td>
-                <td>ตำแหน่งที่ถนัด</td>
-                <td>สนาม</td>
-                <td>แหล่งข่าวสารที่ได้รับ</td>
-
-            </tr>
-            <?php
-            for ($i = 0; $i < sizeof($data); $i++) {
-                $a = $i + 1;
-                echo " <tr>
-            <td>{$a}</td>
-            <td>{$data[$i]['Subject']}</td>
-            <td>'{$data[$i]['Member_PID']}</td>
-            <td>{$data[$i]['Email']}</td>
-            <td>{$data[$i]['Firstname']}</td>
-            <td>{$data[$i]['Lastname']}</td>
-            <td>{$data[$i]['Firstname_EN']}</td>
-            <td>{$data[$i]['Lastname_EN']}</td>
-            <td>{$data[$i]['Nickname']}</td>
-            <td>{$data[$i]['Sex']}</td>
-            <td>{$data[$i]['Height']}</td>
-            <td>{$data[$i]['Birthdate']}</td>
-            <td>{$data[$i]['Age']}</td>
-            <td>{$data[$i]['Address']}</td>
-            <td>{$data[$i]['School']}</td>
-            <td>{$data[$i]['Class']}</td>
-            <td>{$data[$i]['Foot']}</td>
-            <td>'{$data[$i]['Tel']}</td>
-            <td>{$data[$i]['Pname']}</td>
-            <td>{$data[$i]['Parent_Tel']}</td>
-            <td>{$data[$i]['Salary']}</td>
-            <td>{$data[$i]['Club']}</td>
-            <td>{$data[$i]['Position']}</td>
-            <td>{$data[$i]['Field']}</td>
-            <td>{$data[$i]['Info']}</td>
-
-            </tr>";
-            }
-
-            ?>
-
-
-
-        </table>
-    </body>
-<?php } ?>
-<?php 
-if ($_REQUEST['action'] == '2') {
+    include("PHPExcel/Classes/PHPExcel.php");
     $name = $_POST['Event_Name'];
-    header('Content-Type: text/html; charset=tis620');
-    header("Content-Type: application/vnd.ms-excel"); // ประเภทของไฟล์
-    header("Content-Disposition: attachment; filename={$_REQUEST['Event_Name']}.xls"); //กำหนดชื่อไฟล์
-    header("Content-Type: application/force-download"); // กำหนดให้ถ้าเปิดหน้านี้ให้ดาวน์โหลดไฟล์
-    header("Content-Type: application/octet-stream");
-    header("Content-Type: application/download"); // กำหนดให้ถ้าเปิดหน้านี้ให้ดาวน์โหลดไฟล์
-    header("Content-Transfer-Encoding: binary");
-    header("Content-Length: " . filesize("myexcel.xls"));
+    $objPHPExcel = new PHPExcel();
 
-    @readfile($filename);
-?>
-    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+    // กำหนดค่าต่างๆ
+    $objPHPExcel->getProperties()->setCreator("SirKy");
+    $objPHPExcel->getProperties()->setLastModifiedBy("SirKy");
+    $objPHPExcel->getProperties()->setTitle("Office 2007 XLSX ReportQuery Document");
+    $objPHPExcel->getProperties()->setSubject("Office 2007 XLSX ReportQuery Document");
+    $objPHPExcel->getProperties()->setDescription("ReportQuery from SirKy");
 
-    <html>
-    <?php
+    $sheet = $objPHPExcel->getActiveSheet();
+    $pageMargins = $sheet->getPageMargins();
 
-    $obj = new PastEvent;
-    $data = $obj->getData2($_REQUEST['Event_Name']);
-    ?>
+    $columnCharacter = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
 
-    <body>
-        <table>
-            <tr>
-                <td>ลำดับ</td>
-                <td>กิจกรรมที่ลงสมัคร</td>
-                <td>เลขบัตรประชาชน</td>
-                <td>Email</td>
-                <td>ชื่อภาษาไทย</td>
-                <td>นามสกุลภาษาไทย</td>
-                <td>ชื่อภาษาอังกฤษ</td>
-                <td>นามสกุลภาษาอังกฤษ</td>
-                <td>ชื่อเล่น</td>
-                <td>เพศ</td>
-                <td>ส่วนสูง</td>
-                <td>วันเกิด</td>
-                <td>อายุ</td>
-                <td>ที่อยู่</td>
-                <td>โรงเรียน</td>
-                <td>ระดับชั้น</td>
-                <td>เท้าที่ถนัด</td>
-                <td>เบอร์โทรศัพท์</td>
-                <td>ชื่อผู้ปกครอง</td>
-                <td>เบอร์โทรศัพท์ผู้ปกครอง</td>
-                <td>เงินเดือนผู้ปกครอง</td>
+    // margin is set in inches (0.5cm)
+    $margin = 0.5 / 2.54;
 
-                <td>สังกัดทีม/สโมสร</td>
-                <td>ตำแหน่งที่ถนัด</td>
-                <td>สนาม</td>
-                <td>แหล่งข่าวสารที่ได้รับ</td>
+    $pageMargins->setTop($margin);
+    $pageMargins->setBottom($margin);
+    $pageMargins->setLeft($margin);
+    $pageMargins->setRight(0);
 
-            </tr>
-            <?php
-            for ($i = 0; $i < sizeof($data); $i++) {
-                $a = $i + 1;
-                echo " <tr>
-            <td>{$a}</td>
-            <td>{$data[$i]['Subject']}</td>
-            <td>'{$data[$i]['Member_PID']}</td>
-            <td>{$data[$i]['Email']}</td>
-            <td>{$data[$i]['Firstname']}</td>
-            <td>{$data[$i]['Lastname']}</td>
-            <td>{$data[$i]['Firstname_EN']}</td>
-            <td>{$data[$i]['Lastname_EN']}</td>
-            <td>{$data[$i]['Nickname']}</td>
-            <td>{$data[$i]['Sex']}</td>
-            <td>{$data[$i]['Height']}</td>
-            <td>{$data[$i]['Birthdate']}</td>
-            <td>{$data[$i]['Age']}</td>
-            <td>{$data[$i]['Address']}</td>
-            <td>{$data[$i]['School']}</td>
-            <td>{$data[$i]['Class']}</td>
-            <td>{$data[$i]['Foot']}</td>
-            <td>'{$data[$i]['Tel']}</td>
-            <td>{$data[$i]['Pname']}</td>
-            <td>{$data[$i]['Parent_Tel']}</td>
-            <td>{$data[$i]['Salary']}</td>
-            <td>{$data[$i]['Club']}</td>
-            <td>{$data[$i]['Position']}</td>
-            <td>{$data[$i]['Field']}</td>
-            <td>{$data[$i]['Info']}</td>
+    $styleHeader = array(
+        //'fill' => array('type' => PHPExcel_Style_Fill::FILL_SOLID,'color' => array('rgb' => 'ffff00')),
+        'borders' => array('outline' => array('style' => PHPExcel_Style_Border::BORDER_THIN)),
+        'font'  => array(
+            'bold'  => true,
+            'size'  => 16,
+            'name'  => 'TH Sarabun New'
+        )
+    );
 
-            </tr>";
-            }
+    //Set หัว Column
 
-            ?>
+    $rowCell = 1;
+
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A' . $rowCell, 'ลำดับ');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B' . $rowCell, 'กิจกรรมที่ลงสมัคร');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C' . $rowCell, 'เลขบัตรประชาชน');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D' . $rowCell, 'Email');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E' . $rowCell, 'ชื่อภาษาไทย');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F' . $rowCell, 'นามสกุลภาษาไทย');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G' . $rowCell, 'ชื่อภาษาอังกฤษ');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H' . $rowCell, 'นามสกุลภาษาอังกฤษ');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I' . $rowCell, 'ชื่อเล่น');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J' . $rowCell, 'เพศ');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K' . $rowCell, 'ส่วนสูง');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L' . $rowCell, 'วันเกิด');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M' . $rowCell, 'อายุ');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N' . $rowCell, 'ที่อยู่');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O' . $rowCell, 'โรงเรียน');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P' . $rowCell, 'ระดับชั้น');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q' . $rowCell, 'เท้าที่ถนัด');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R' . $rowCell, 'เบอร์โทรศัพท์');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('S' . $rowCell, 'ชื่อผู้ปกครอง');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T' . $rowCell, 'เบอร์โทรศัพท์ผู้ปกครอง');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('U' . $rowCell, 'เงินเดือนผู้ปกครอง');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V' . $rowCell, 'สังกัดทีม/สโมสร');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('W' . $rowCell, 'ตำแหน่งที่ถนัด');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X' . $rowCell, 'สนาม');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Y' . $rowCell, 'แหล่งข่าวสารที่ได้รับ');
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z' . $rowCell, 'สถานะ');
+    $objPHPExcel->getActiveSheet()->getStyle('A1:Z1')->applyFromArray($styleHeader);
+
+    //เขียนข้อมูล
+    $rowCell = 2;
+    $c = 0;
+
+    for ($i = 0; $i < sizeof($data); $i++) {
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A' . $rowCell, $i + 1);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B' . $rowCell, $data[$i]['Subject']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C' . $rowCell, "'" . $data[$i]['Member_PID']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D' . $rowCell,  $data[$i]['Email']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E' . $rowCell, $data[$i]['Firstname']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F' . $rowCell, $data[$i]['Lastname']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G' . $rowCell, $data[$i]['Firstname_EN']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H' . $rowCell, $data[$i]['Lastname_EN']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I' . $rowCell, $data[$i]['Nickname']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J' . $rowCell, $data[$i]['Sex']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K' . $rowCell, $data[$i]['Height']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L' . $rowCell, $data[$i]['Birthdate']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M' . $rowCell, $data[$i]['Age']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N' . $rowCell, $data[$i]['Address']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O' . $rowCell, $data[$i]['School']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P' . $rowCell, $data[$i]['Class']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q' . $rowCell, $data[$i]['Foot']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R' . $rowCell, $data[$i]['Tel']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('S' . $rowCell, $data[$i]['Pname']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T' . $rowCell, $data[$i]['Parent_Tel']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('U' . $rowCell, $data[$i]['Salary']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V' . $rowCell, $data[$i]['Club']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('W' . $rowCell, $data[$i]['Position']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X' . $rowCell, $data[$i]['Field']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Y' . $rowCell, $data[$i]['Info']);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z' . $rowCell, $data[$i]['Active']);
+        $rowCell++;
+    }
 
 
+    // Rename worksheet
+    $objPHPExcel->getActiveSheet()->setTitle('ReportQuery');
 
-        </table>
-    </body>
-<?php } ?>
+    // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+    $objPHPExcel->setActiveSheetIndex(0);
+
+
+    //ตั้งชื่อไฟล์
+
+    $file_name = $_REQUEST['Event_Name'];
+    //
+
+    // Save Excel 2007 file
+    #echo date('H:i:s') . " Write to Excel2007 format\n";
+    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+    ob_end_clean();
+    // We'll be outputting an excel file
+    header('Content-type: application/vnd.ms-excel');
+    // It will be called file.xls
+    header('Content-Disposition: attachment;filename="' . $file_name . '.xlsx"');
+    $objWriter->save('php://output');
+    exit();
+} ?>
+

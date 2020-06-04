@@ -2,12 +2,20 @@
 require_once "connect.php";
 require_once "thailand.inc.php";
 require_once "register.query.php";
+require_once "PHPMailer/PHPMailerAutoload.php";
 if (isset($_POST['province_id'])) {
     $obj = new thailand;
     $amphure = $obj->getamphures($_POST['province_id']);
+    // echo $_POST['province_id'] ;
     echo json_encode($amphure);
 }
-if (isset($_POST['amphure_id'])) {
+if (isset($_POST['Zipcode']) && $_POST['action'] == '5') {
+    $obj = new thailand;
+    $Zipcode = $obj->getZipcode($_POST['Zipcode']);
+    // echo $_POST['Zipcode'] ;
+    echo json_encode($Zipcode);
+}
+if (isset($_POST['amphure_id']) && $_POST['action'] == '4') {
 
     $obj = new thailand;
     $district = $obj->getdistrict($_POST['amphure_id']);
@@ -166,7 +174,7 @@ if (@$_POST['action'] == '1') {
         $str .= "กรุณากรอกเบอร์โทรศัพท์" . "<br>";
     } else {
         $Tel = test_input($_POST["Tel"]);
-        if (!preg_match("/^[0-9]*$/", $Tel) || strlen($Tel) != 10) {
+        if (!preg_match("/^[0-9]*$/", $Tel) || strlen($Tel) < 9 || strlen($Tel) > 10 ) {
             $str .= "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง" . "<br>";
         }
     }
@@ -174,7 +182,7 @@ if (@$_POST['action'] == '1') {
         $str .= "กรุณากรอกเบอร์โทรผู้ปกครอง" . "<br>";
     } else {
         $Parent_tel = test_input($_POST["Parent_tel"]);
-        if (!preg_match("/^[0-9]*$/", $Parent_tel) || strlen($Parent_tel) != 10) {
+        if (!preg_match("/^[0-9]*$/", $Parent_tel) || strlen($Parent_tel) < 9  || strlen($Parent_tel) > 10) {
             $str .= "กรุณากรอกเบอร์โทรศัพท์ผู้ปกครองให้ถูกต้อง" . "<br>";
         }
     }
@@ -201,23 +209,18 @@ if (@$_POST['action'] == '1') {
     }
     echo $str;
     if ($str == "") {
-        $info ="" ;
+        $info = "";
         $Home = $Address . " " . $Amphure . " " . $district . " " . $Province . " " . $Zipcode;
-        for($i = 0 ;$i<sizeof($_POST['info']);$i++){
-            $info .= $_POST['info'][$i]." " ;
+        for ($i = 0; $i < sizeof($_POST['info']); $i++) {
+            $info .= $_POST['info'][$i] . " ";
         }
 
         // print_r($_POST['info']);
         // echo $info;
         $obj = new register;
-        $query = $obj->insertRegis($_POST['Pid'],$_POST['Email'],$_POST['Fname'],$_POST['Lname'],$_POST['EFname'],$_POST['ELname'],$_POST['Nickname'],$_POST['sex'],$_POST['Height'],$_POST['Birthdate'],$_POST['Age'],$Home,$_POST['School'],$_POST['Class'],$_POST['Foot'],$_POST['Tel'],$_POST['Parent_tel'],$_POST['salary'],$_POST['subject'],$_POST['club'],$_POST['Position'],$_POST['Field'],$_POST['Pname'],$info);
-//    echo "({$_POST['Pid']}, {$_POST['Email']},{$_POST['Fname']},{$_POST['Lname']},{$_POST['EFname']},{$_POST['ELname']},
-//        {$_POST['Nickname']},{$_POST['sex']},{$_POST['Height']},{$_POST['Birthdate']},{$_POST['Age']},{$Home},{$_POST['School']},{$_POST['Class']}
-//        ,{$_POST['Foot']},{$_POST['Tel']},{$_POST['Parent_tel']},{$_POST['salary']},{$_POST['subject']},{$_POST['club']},{$_POST['Position']},{$_POST['Field']}
-//        ,{$_POST['Pname']},{$info})";
-  
-        // echo $query;
-
+        $QRCode = $obj->GenQR($_POST['Pid']);
+        $query = $obj->insertRegis($_POST['Pid'], $_POST['Email'], $_POST['Fname'], $_POST['Lname'], $_POST['EFname'], $_POST['ELname'], $_POST['Nickname'], $_POST['sex'], $_POST['Height'], $_POST['Birthdate'], $_POST['Age'], $Home, $_POST['School'], $_POST['Class'], $_POST['Foot'], $_POST['Tel'], $_POST['Parent_tel'], $_POST['salary'], $_POST['subject'], $_POST['club'], $_POST['Position'], $_POST['Field'], $_POST['Pname'], $info);
+       
     }
 }
 if (@$_POST['action'] == '2') {
@@ -241,6 +244,37 @@ if (@$_POST['action'] == '3') {
         "Field4" => $row['Field4']
     );
     echo json_encode($jsonobj);
+}
+if(@$_POST['action'] == '6'){
+    $obj = new register; 
+    $QRCode = $obj->GenQR($_POST['Pid']);
+    $body = "กรุณานำ QRCode ไปยืนยันตัวหน้างาน</b><br><br>{$QRCode}";
+    $mail = new PHPMailer();
+    $mail->isSMTP();
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = "tls";
+    $mail->Host = "smtp.gmail.com"; // ถ้าใช้ smtp ของ server เป็นอยู่ในรูปแบบนี้ mail.domainyour.com
+    $mail->Port = 587;
+    $mail->isHTML();
+    $mail->CharSet = "utf-8"; //ตั้งเป็น UTF-8 เพื่อให้อ่านภาษาไทยได้
+    $mail->Username = "pokket.1@gmail.com"; //กรอก Email Gmail หรือ เมลล์ที่สร้างบน server ของคุณเ
+    $mail->Password = "#Gie54321"; // ใส่รหัสผ่าน email ของคุณ
+    $mail->SetFrom = ('pokket.1@gmail.com'); //กำหนด email เพื่อใช้เป็นเมล์อ้างอิงในการส่ง
+    $mail->FromName = "PYDCOLOR"; //ชื่อที่ใช้ในการส่ง
+    $mail->Subject = "สมัครเข้าร่วมกิจกรรม {$_POST['Subject']} สำเร็จ";  //หัวเรื่อง emal ที่ส่ง
+    $mail->Body = "{$body}"; //รายละเอียดที่ส่ง
+    $mail->AddAddress("{$_POST['Email']}", 'Recive Name'); //อีเมล์และชื่อผู้รับ
+    $mail->Send();
+    //ส่วนของการแนบไฟล์ รองรับ .rar , .jpg , png
+    // $mail->AddAttachment("files/1.rar");
+    // $mail->AddAttachment("files/1.png");
+
+    // ตรวจสอบว่าส่งผ่านหรือไม่
+    // if ($mail->Send()) {
+    //     echo "Success";
+    // } else {
+    //     echo "Failed";
+    // }
 }
 function test_input($data)
 {

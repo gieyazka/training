@@ -102,10 +102,21 @@
                 method: "POST",
                 data: {
                     Email: $('#email').val(),
-                    action : 1
-                },success : function(result){
-                    if(result == 'Success'){
-                        alert("send success")
+                    action: 1
+                },
+                success: function(result) {
+                    if (result == 'Success') {
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'ส่ง Email สำเร็จ',
+                            text: 'ข้อมลในการกู้คินรหัสผ่านอยู่ในอีเมลล์ของท่าน'
+                        })
+                    } else {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'ส่ง Email ไม่สำเร็จ',
+                            text: 'กรุณาตรวจสอบ Email ของท่าน'
+                        })
                     }
                 }
             })

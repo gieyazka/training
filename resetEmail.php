@@ -1,5 +1,7 @@
 <?php
-if(!isset($_GET['verify'])){ header('Location: http://www.mrpke.com/'); }
+if (!isset($_GET['verify'])) {
+    header('Location: http://www.mrpke.com/');
+}
 $Email = base64_decode(base64_decode($_GET['verify']));
 ?>
 <!DOCTYPE html>
@@ -106,12 +108,23 @@ $Email = base64_decode(base64_decode($_GET['verify']));
                 url: "resetEmail.control.php",
                 method: "POST",
                 data: {
-                    Email : $('#Email').val(),
+                    Email: $('#Email').val(),
                     Password: $('#Password').val(),
                     action: 1
                 },
                 success: function(result) {
-                  
+                    if (result == "") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'เปลี่ยนรหัสผ่านสำเร็จ'
+                        })
+                        setTimeout("location.href = 'index';", 2100);
+                    } else {
+                        Toast.fire({
+                            icon: 'error',
+                            title: result
+                        })
+                    }
                 }
             })
         })

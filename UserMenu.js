@@ -104,6 +104,19 @@ SendData.click(function () {
                     },
                     success: function (data) {
                         $("#ShowOutput").append(data)
+                        $.ajax({
+                            url: 'register.control.php',
+                            method: "POST",
+                            data: {
+                                Pid: $('#Pid').val(),
+                                Subject: $('#subject').val(),
+                                Email : $('#Email').val(),
+                                action: 6
+                            },
+                            success: function (data) {
+                                $("#ShowOutput").append(data)
+                            }
+                        });
                     }
                 });
             } else {
@@ -149,6 +162,7 @@ $('#province').change(function () {
     if ($("#province").val() == "") {
         $("#province").removeClass("is-valid").addClass("is-invalid");
         $("#amphure").prop('disabled', true);
+        $("#Zipcode").prop('disabled', true);
 
     } else {
         $("#province").removeClass("is-invalid").addClass("is-valid");
@@ -160,10 +174,10 @@ $('#province').change(function () {
             },
             success: function (result) {
                 var data = JSON.parse(result);
-                console.log(data)
+                // console.log(data)
                 $.each(data, function (index, item) {
                     $('#amphure').append(
-                        $('<option></option>').val(item.name_th).html(item.name_th).attr('id', item.id)
+                        $('<option></option>').val(item.AMPHUR_NAME).html(item.AMPHUR_NAME).attr('id', item.AMPHUR_ID)
 
                     );
                 });
@@ -190,28 +204,53 @@ $('#Finish').click(function () {
 
 });
 
+
+
 $('#amphure').change(function () {
     $('#district').html('<option selected="selected"  value="">เลือกตำบล</option>');
+    $('#Zipcode').html('<option selected="selected"  value="">รหัสไปรษณีย์</option>');
     if ($('#amphure').val() == "" || $('#amphure').val() == "0") {
         $('#district').html('<option selected="selected"  value="">เลือกตำบล</option>');
-
+        $('#Zipcode').html('<option selected="selected"  value="">รหัสไปรษณีย์</option>');
         // console.log($(this).children(":selected").attr("id"))
         // console.log($(this).children(":selected").attr("value"))
     }
+    $("#Zipcode").prop('disabled', false)
     $("#district").prop('disabled', false)
     $.ajax({
         url: 'register.control.php',
         method: "POST",
         data: {
-            amphure_id: $(this).children(":selected").attr("id")
+            Zipcode: $('#amphure').children(":selected").attr("id"),
+            action: 5
+        }, success: function (result) {
+            var a = JSON.parse(result);
+            console.log(a)
+            $.each(a, function (index, item) {
+
+                $('#Zipcode').append(
+                    $('<option></option>').val(item.POSTCODE).html(item.POSTCODE).attr('id', item.POSTCODE)
+
+                );
+            });
+        }
+    })
+    $.ajax({
+        url: 'register.control.php',
+        method: "POST",
+        data: {
+            amphure_id: $(this).children(":selected").attr("id"),
+            action: 4
         },
         success: function (result) {
+
             var data = JSON.parse(result);
             $.each(data, function (index, item) {
                 $('#district').append(
-                    $('<option></option>').val(item.name_th).html(item.name_th).attr('id', item.id)
+                    $('<option></option>').val(item.DISTRICT_NAME).html(item.DISTRICT_NAME).attr('id', item.DISTRICT_ID)
 
                 );
+           
             });
             // console.log(data)
 
@@ -258,8 +297,8 @@ $('#Age').change(function () {
 })
 $('.Tel').each(function () {
     $(this).change(function () {
-        console.log($(this).val())
-        if (!$(this).val().match(/^([0-9])+$/i) || $(this).val().length != 10) {
+        // console.log($(this).val())
+        if (!$(this).val().match(/^([0-9])+$/i) || $(this).val().length < 9  ||  $(this).val().length > 10) {
             $(this).removeClass("is-valid").addClass("is-invalid");
         } else {
             $(this).removeClass("is-invalid").addClass("is-valid");
