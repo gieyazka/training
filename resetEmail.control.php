@@ -4,7 +4,7 @@ class resetPassword extends Dbh {
     public function rePass($pass,$Email){
         $sql = "UPDATE `user` SET `Password`= ? WHERE Email = ?" ;
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$pass,$Email]) ;
+        $stmt->execute([md5($pass),$Email]) ;
     }
 }
 if($_POST['action'] == '1'){

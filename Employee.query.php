@@ -11,6 +11,7 @@ class Employee extends Dbh{
         return $data ;
     }
     public function InsertEmployee($Username,$Password,$Fname,$Lname,$Tel,$Email){
+        $newpass = md5($Password);
         $sql = "select * from user where Username = ? or Email = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$Username,$Email]);
@@ -19,7 +20,7 @@ class Employee extends Dbh{
         $sql ="INSERT INTO `user`(`Username`, `Password`, `Firstname`, `Lastname`, `Tel`, `Email`, `Status`) 
         VALUES (?,?,?,?,?,?,'Employee') " ;
         $stmt = $this->connect()->prepare($sql);
-       return $stmt->execute([$Username,$Password,$Fname,$Lname,$Tel,$Email]);
+       return $stmt->execute([$Username,$newpass,$Fname,$Lname,$Tel,$Email]);
         
         }else{
             echo "มี Username หรือ Email  นี่แล้ว" ;
