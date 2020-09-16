@@ -45,7 +45,7 @@ if ($_POST['action'] == '1') {
         if ($mail->Send()) {
             echo "Success";
         } else {
-            echo "Failed";
+            echo "Failed". $mail->ErrorInfo;
         }
     }
 }
